@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
-import Header from './Header';
+import { Link } from 'react-router-dom';
 import Footer from './Footer';
+import Header from './Header';
 import '../App.css';
 
 class LoginForm extends React.Component {
