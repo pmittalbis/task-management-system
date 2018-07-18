@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Footer from './Footer';
 import Header from './Header';
 import '../App.css';
@@ -12,19 +13,41 @@ class SignupForm extends React.Component {
       message: '',
     }
   }
+
+  notify = (msg) => {
+    toast(msg, { autoClose: 5000 });
+  }
+
   handleSubmitClick(e) {
-    debugger;
-    if (this.state.message === 'Password match') {
-      axios.post('/Signup', {
-        name: this.refs.name.value,
-        email: this.refs.email.value,
-        password: this.refs.password.value,
-      }).catch((err) => {console.log(err)});
-    } else {
-      e.preventDefault();
-      alert(this.state.message);
+    e.preventDefault();
+    const name = this.refs.name.value;
+    const email = this.refs.email.value;
+    const password = this.refs.password.value;
+    const confirmPwd = this.refs.confirmPwd.value;
+    const data = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    if (name && email && password && confirmPwd) {
+      if (this.state.message === 'Password match') {
+        axios.post('http://localhost:4000/Signup', data)
+         .then((response) => {
+           if (typeof response.data === "object") {
+             this.notify("You have successfully signed up.");
+             setTimeout(() => { this.props.history.push("/") },2000)
+           } else {
+             this.notify(response.data);
+           }
+         })
+         .catch((err) => { console.log(err) });
+      } else {
+        e.preventDefault();
+        alert(this.state.message);
+      }
     }
   }
+
   handleOnPasswordChange() {
     if (this.refs.password.value === this.refs.confirmPwd.value) {
       this.setState({
@@ -32,7 +55,7 @@ class SignupForm extends React.Component {
       })
     } else {
       this.setState({
-        message: 'Password do not match!'
+        message: 'Password do not match!',
       })
     }
   }
@@ -41,13 +64,13 @@ class SignupForm extends React.Component {
       <div>
         <Header />
         <form>
-          <label for="name">Full name*:</label>
+          <label htmlFor="name">Full name*:</label>
           <input id="name" ref="name" className="form-control" required placeholder="Enter Full name" type="text"/>
-          <label for="email">Email*:</label>
+          <label htmlFor="email">Email*:</label>
           <input id="email" ref="email" className="form-control" required placeholder="Enter email" type="email" />
-          <label for="password">Password*:</label>
+          <label htmlFor="password">Password*:</label>
           <input id="password" ref="password" className="form-control" required placeholder="Enter password" type="password" />
-          <label for="confirm-pwd">Re-enter Password*:</label>
+          <label htmlFor="confirm-pwd">Re-enter Password*:</label>
           <input id="confirm-pwd" required onChange={() => this.handleOnPasswordChange()} ref="confirmPwd" className="form-control" placeholder="Re-enter password" type="password" />
           <p>{this.state.message}</p>
           <br />
