@@ -38,8 +38,11 @@ server.post('/Signup', (req, res) => {
 server.post('/Login', (req, res) => {
   const AuthUser = User.findOne({ email: req.body.email, password: req.body.password }, (err, record) => {
     if (err) { res.send("Login Failed!") }
-    if (record) { res.send(record); }
-    res.send("Username or password does not match!");
+    if (record) {
+      res.send(record);
+    } else {
+      res.send("Username or password does not match!");
+    }
   })
 });
 
