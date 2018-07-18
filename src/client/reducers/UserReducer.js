@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
+  LOGOUT,
 } from '../constants';
 
 let currentUser = null;
@@ -16,6 +17,11 @@ const UserReducer = (state = { currentUser }, action) => {
       return {
         ...state,
         currentUser: action.user,
+      }
+    case LOGOUT:
+      return {
+        ...state,
+        currentUser: null,
       }
     default:
       return {
