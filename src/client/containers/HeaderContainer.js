@@ -9,4 +9,11 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(Header);
+function mapStateToProps(state) {
+  debugger;
+  return {
+    user: state.UserReducer.currentUser,
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
