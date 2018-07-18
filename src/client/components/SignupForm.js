@@ -45,6 +45,10 @@ class SignupForm extends React.Component {
         e.preventDefault();
         alert(this.state.message);
       }
+    } else {
+      this.setState({
+        message: "Please fill all required fields!"
+      });
     }
   }
 
