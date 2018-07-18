@@ -26,7 +26,8 @@ class LoginForm extends React.Component {
       .then((response) => {
         if (typeof response.data === "object") {
           this.notify("Welcome " + response.data.name);
-          setTimeout(() => { this.props.history.push("/") },2000)
+          this.props.setCurrentUser(response.data);
+          setTimeout(() => { this.props.history.push("/Dashboard") }, 2000)
         } else {
           this.setState({
             message: response.data,
