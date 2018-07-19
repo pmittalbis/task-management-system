@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
