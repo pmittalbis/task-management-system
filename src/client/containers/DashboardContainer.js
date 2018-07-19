@@ -1,16 +1,16 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dashboard from '../components/Dashboard';
-import { getCurrentUser } from '../actions';
+import { getCurrentUser, setCurrentUser } from '../actions';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getCurrentUser,
+    setCurrentUser,
   }, dispatch);
 }
 
 function mapStateToProps(state) {
-  debugger;
   return {
     user: state.UserReducer.currentUser,
   };

@@ -17,6 +17,10 @@
 .header h3 {
   display: inline-block;
 }
+.profile {
+  max-width: 200px;
+  length: 200px;
+}
 .footer {
   background-color: #222;
   text-align: center;
