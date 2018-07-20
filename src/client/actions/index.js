@@ -1,5 +1,6 @@
 import {
   GET_CURRENT_USER,
+  SET_USERS,
   SET_CURRENT_USER,
   LOGOUT
 } from '../constants';
@@ -7,6 +8,13 @@ import {
 export function getCurrentUser() {
   return {
     type: GET_CURRENT_USER,
+  };
+}
+
+export function setUsers(users) {
+  return {
+    type: SET_USERS,
+    users,
   };
 }
 

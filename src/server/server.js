@@ -58,6 +58,28 @@ server.post('/Login', (req, res) => {
   })
 });
 
+server.get('/GetUsers', (req, res) => {
+  const users = User.find({}, (err, records) => {
+    if (err) { res.send("Login Failed!") }
+    if (records) {
+      res.send(records);
+    } else {
+      res.send("Unable to fetch users!");
+    }
+  });
+});
+
+server.get('/GetUser/:id', (req, res) => {
+  const users = User.findOne({_id: req.params.id}, (err, record) => {
+    if (err) { res.send("Error in fetching user!") }
+    if (record) {
+      res.send(record);
+    } else {
+      res.send("User not found!");
+    }
+  });
+});
+
 server.put('/UploadProfile/:id', upload.single('image'), (req, res) => {
   console.log(req.file);
   console.log(req.params.id);
@@ -68,6 +90,31 @@ server.put('/UploadProfile/:id', upload.single('image'), (req, res) => {
       res.send(record);
     }
   })
+});
+
+server.put('/AssignTask/:id', (req, res) => {
+  var tempArr = [];
+  tempArr.push(req.body.assignedTask);
+  User.findOneAndUpdate({_id: req.params.id},
+    {$set: {
+      assignedTasks: tempArr
+    }}, {new: true}, (err, record) => {
+    if (err) { res.send(err) }
+    else {
+      res.send(record);
+    }
+  });
+  console.log("assignedTo id ", req.body.assignedTask.taskDetail.assignedTo._id);
+  User.findOneAndUpdate({_id: req.body.assignedTask.taskDetail.assignedTo._id},
+    {$set: {
+      toDoTasks: tempArr
+    }}, {new: true}, (err, record) => {
+    if (err) { res.send(err) }
+    else {
+      console.log("assignedTo record ", record);
+      // res.send(record);
+    }
+  });
 });
 
 server.listen(PORT, () => {

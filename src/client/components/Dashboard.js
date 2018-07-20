@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import AssignTaskContainer from '../containers/AssignTaskContainer';
 import Footer from './Footer';
 import HeaderContainer from '../containers/HeaderContainer';
 import '../App.css';
@@ -26,6 +27,7 @@ class LoginForm extends React.Component {
     axios.put(`http://localhost:4000/UploadProfile/${this.props.user._id}`, formData)
      .then((res) => {
        this.props.setCurrentUser(res.data)
+       this.refs.file.value = null;
        console.log("Updated user ", res.data)
      })
      .catch((err) => { console.log(err) });
@@ -42,10 +44,13 @@ class LoginForm extends React.Component {
         <div>
           <HeaderContainer />
           <img className="center-block profile" alt="profile-pic" src={path + this.props.user.profilePic} />
-          <input className="center-block" accept="image/*" type="file" onChange={(e) => { this.handleFileChange(e) }} />
-          <button className="btn btn-info" onClick={() => { this.handleSubmit(); }}>Submit</button>
+          <input className="center-block" accept="image/*" ref="file" type="file" onChange={(e) => { this.handleFileChange(e) }} />
+          <button className="btn btn-info text-center" onClick={() => { this.handleSubmit(); }}>Submit</button>
           <h2>Welcome {this.props.user.name}!</h2>
           <p>{this.props.user.email}</p>
+          <div className="row">
+            <AssignTaskContainer />
+          </div>
           <Footer />
         </div>
       )
