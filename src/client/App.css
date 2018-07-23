@@ -17,6 +17,10 @@
   height: 150px;
 }
 
+.panel {
+  border: 1px dotted;
+}
+
 .footer {
   background-color: #222;
   text-align: center;
