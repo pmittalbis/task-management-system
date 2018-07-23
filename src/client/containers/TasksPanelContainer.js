@@ -1,20 +1,21 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import AssignTask from '../components/AssignTask';
-import { setUsers, setCurrentUser } from '../actions';
+import TasksPanel from '../components/TasksPanel';
+import { saveTasks } from '../actions';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    setUsers,
-    setCurrentUser,
+    saveTasks,
   }, dispatch);
 }
 
 function mapStateToProps(state) {
+  debugger;
   return {
     user: state.UserReducer.currentUser,
     users: state.UserReducer.users,
+    tasks: state.UserReducer.tasks,
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssignTask);
+export default connect(mapStateToProps, mapDispatchToProps)(TasksPanel);

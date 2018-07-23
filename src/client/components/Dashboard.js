@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import AssignTaskContainer from '../containers/AssignTaskContainer';
+import TasksPanelContainer from '../containers/TasksPanelContainer';
 import Footer from './Footer';
 import HeaderContainer from '../containers/HeaderContainer';
 import '../App.css';
@@ -50,6 +51,7 @@ class LoginForm extends React.Component {
           <p>{this.props.user.email}</p>
           <div className="row">
             <AssignTaskContainer />
+            <TasksPanelContainer />
           </div>
           <Footer />
         </div>

@@ -2,13 +2,15 @@ import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
   SET_USERS,
+  SAVE_TASKS,
   LOGOUT,
 } from '../constants';
 
 let currentUser = null;
 let users = [];
+let tasks = [];
 
-const UserReducer = (state = { currentUser, users }, action) => {
+const UserReducer = (state = { currentUser, users, tasks }, action) => {
   switch (action.type) {
     case GET_CURRENT_USER:
       return {
@@ -24,6 +26,12 @@ const UserReducer = (state = { currentUser, users }, action) => {
       return {
         ...state,
         users: action.users,
+      }
+    case SAVE_TASKS:
+    debugger
+      return {
+        ...state,
+        tasks: action.tasks,
       }
     case LOGOUT:
       return {

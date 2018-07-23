@@ -13,21 +13,15 @@ class AssignTask extends React.Component {
 
   async handleAssignTask(e) {
     e.preventDefault();
-    const {data: assignedTo} = await axios.get(`http://localhost:4000/GetUser/${this.refs.name.value}`);
-    const taskDetail = {
-      assignedTo: assignedTo,
-      status: this.refs.status.value,
-      description: this.refs.description.value,
-    };
     const assignedTask = {
-      assingedBy: this.props.user,
-      taskDetail,
+      assignedBy: this.props.user._id,
+      assignedTo: this.refs.name.value,
+      description: this.refs.description.value,
+      status: this.refs.status.value,
     }
-    console.log(assignedTask);
-    debugger;
-    axios.put(`http://localhost:4000/AssignTask/${this.props.user._id}`, {assignedTask})
+    axios.post('http://localhost:4000/AssignTask', {assignedTask})
      .then((res) => {
-       this.props.setCurrentUser(res.data)
+       // this.props.setCurrentUser(res.data)
        console.log("Updated user ", res.data)
      })
      .catch((err) => { console.log(err) });
