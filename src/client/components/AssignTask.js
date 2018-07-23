@@ -1,14 +1,9 @@
-import axios from 'axios';
 import React from 'react';
 import '../App.css';
 
 class AssignTask extends React.Component {
-  componentWillMount() {
-    axios.get('http://localhost:4000/GetUsers')
-    .then((response) => {
-      this.props.setUsers(response.data);
-    })
-    .catch((err) => { console.log(err) });
+  async componentWillMount() {
+    await this.props.getUsers();
   }
 
   async handleAssignTask(e) {
@@ -19,12 +14,8 @@ class AssignTask extends React.Component {
       description: this.refs.description.value,
       status: this.refs.status.value,
     }
-    axios.post('http://localhost:4000/AssignTask', {assignedTask})
-     .then((res) => {
-       // this.props.setCurrentUser(res.data)
-       console.log("Updated user ", res.data)
-     })
-     .catch((err) => { console.log(err) });
+    await this.props.assignTask(assignedTask);
+    debugger;
   }
 
   render() {

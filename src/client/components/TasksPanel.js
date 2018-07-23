@@ -1,15 +1,10 @@
-import axios from 'axios';
 import React from 'react';
 import '../App.css';
 
 class TasksPanel extends React.Component {
-  componentWillMount() {
-    axios.get(`http://localhost:4000/GetTasks/${this.props.user._id}`)
-    .then((response) => {
-      console.log(response.data);
-      this.props.saveTasks(response.data);
-    })
-    .catch((err) => { console.log(err) });
+  async componentWillMount() {
+    await this.props.getTasks(this.props.user._id);
+    debugger;
   }
 
   render() {
@@ -22,7 +17,7 @@ class TasksPanel extends React.Component {
             this.props.tasks.map((task) => {
               return (
                 (task.status === "Done") &&
-                <div>
+                <div key={task._id}>
                   Status: {task.status}
                   Description: {task.description}
                 </div>
@@ -37,7 +32,7 @@ class TasksPanel extends React.Component {
             this.props.tasks.map((task) => {
               return (
                 (task.status === "Pending") &&
-                <div>
+                <div key={task._id}>
                   Status: {task.status}
                   Description: {task.description}
                 </div>
@@ -52,7 +47,7 @@ class TasksPanel extends React.Component {
             this.props.tasks.map((task) => {
               return (
                 (task.status === "In Process") &&
-                <div>
+                <div key={task._id}>
                   Status: {task.status}
                   Description: {task.description}
                 </div>

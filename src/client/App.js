@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardContainer from './containers/DashboardContainer';
 import LoginContainer from './containers/LoginContainer';
-import SignupForm from './components/SignupForm';
+import SignupFormContainer from './containers/SignupFormContainer';
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={LoginContainer} />
-          <Route exact path="/Signup" component={SignupForm} />
+          <Route exact path="/Signup" component={SignupFormContainer} />
           <Route exact path="/Dashboard" component={DashboardContainer} />
         </Switch>
       </BrowserRouter>

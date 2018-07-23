@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -18,29 +17,23 @@ class SignupForm extends React.Component {
     toast(msg, { autoClose: 5000 });
   }
 
-  handleSubmitClick(e) {
+  async handleSubmitClick(e) {
     e.preventDefault();
     const name = this.refs.name.value;
     const email = this.refs.email.value;
     const password = this.refs.password.value;
     const confirmPwd = this.refs.confirmPwd.value;
-    const data = {
+    const userDetails = {
       name: name,
       email: email,
       password: password,
     };
     if (name && email && password && confirmPwd) {
       if (this.state.message === 'Password match') {
-        axios.post('http://localhost:4000/Signup', data)
-         .then((response) => {
-           if (typeof response.data === "object") {
-             this.notify("You have successfully signed up.");
-             setTimeout(() => { this.props.history.push("/") },2000)
-           } else {
-             this.notify(response.data);
-           }
-         })
-         .catch((err) => { console.log(err) });
+        await this.props.signup(userDetails, this);
+        if (this.props.user) {
+          this.history.push("/");
+        }
       } else {
         e.preventDefault();
         alert(this.state.message);

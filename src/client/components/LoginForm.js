@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -18,23 +17,9 @@ class LoginForm extends React.Component {
     e.preventDefault();
     const email = this.refs.email.value;
     const password = this.refs.password.value;
+    let thisContext = this;
     if (email && password) {
-      axios.post('http://localhost:4000/Login', {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        if (typeof response.data === "object") {
-          this.notify("Welcome " + response.data.name);
-          this.props.setCurrentUser(response.data);
-          setTimeout(() => { this.props.history.push("/Dashboard") }, 2000)
-        } else {
-          this.setState({
-            message: response.data,
-          });
-        }
-      })
-      .catch((err) => { console.log(err) });
+      this.props.login(email, password, thisContext);
     } else {
       this.setState({
         message: "Please fill all required fields!"
