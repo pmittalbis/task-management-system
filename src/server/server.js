@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import User from './models/userModel';
+import Task from './models/taskModel';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -92,27 +93,35 @@ server.put('/UploadProfile/:id', upload.single('image'), (req, res) => {
   })
 });
 
-server.put('/AssignTask/:id', (req, res) => {
-  var tempArr = [];
-  tempArr.push(req.body.assignedTask);
-  User.findOneAndUpdate({_id: req.params.id},
-    {$set: {
-      assignedTasks: tempArr
-    }}, {new: true}, (err, record) => {
-    if (err) { res.send(err) }
-    else {
-      res.send(record);
+server.post('/AssignTask', (req, res) => {
+  console.log(req.body.assignedTask);
+  var newTask = new Task(req.body.assignedTask);
+  newTask.save((err, task) => {
+    if (err) {
+      res.send("Error in creating a task!");
+    } else {
+      if (task) {
+        console.log(task);
+        res.send(task);
+      } else {
+        console.log("Can not assign task at the moment!");
+        res.send("Can not assign task at the moment!");
+      }
     }
-  });
-  console.log("assignedTo id ", req.body.assignedTask.taskDetail.assignedTo._id);
-  User.findOneAndUpdate({_id: req.body.assignedTask.taskDetail.assignedTo._id},
-    {$set: {
-      toDoTasks: tempArr
-    }}, {new: true}, (err, record) => {
-    if (err) { res.send(err) }
-    else {
-      console.log("assignedTo record ", record);
-      // res.send(record);
+  })
+});
+
+server.get('/GetTasks/:userId', (req, res) => {
+  console.log(req.body);
+  Task.find({assignedTo: req.params.userId}, (err, tasks) => {
+    if (err) {
+      res.send("Error in fetching tasks!");
+    } else {
+      if (tasks) {
+        res.send(tasks);
+      } else {
+        res.send("No task found");
+      }
     }
   });
 });
