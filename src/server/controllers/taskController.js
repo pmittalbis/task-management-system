@@ -7,13 +7,12 @@ import Task from '../models/taskModel';
 const router = express.Router();
 
 router.post('/AssignTask', (req, res) => {
-  var newTask = new Task(req.body.assignedTask);
+  var newTask = new Task(req.body);
   newTask.save((err, task) => {
     if (err) {
       res.send("Error in creating a task!");
     } else {
       if (task) {
-        console.log(task);
         res.send(task);
       } else {
         console.log("Can not assign task at the moment!");
