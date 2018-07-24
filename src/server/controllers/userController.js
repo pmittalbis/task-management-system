@@ -19,14 +19,14 @@ const router = express.Router();
 router.use(cookieParser());
 var sessionVar;
 
-router.get('/AuthUser', (req, res) => {
+router.get('/AuthUser', async (req, res) => {
   console.log("In auth user..");
   if (!sessionVar.user) {
     console.log("AuthUser not found === ", sessionVar);
     res.status(401).send();
   } else {
     console.log("AuthUser === ", sessionVar.user);
-    res.send(sessionVar.user);
+    await res.send(sessionVar.user);
   }
 });
 

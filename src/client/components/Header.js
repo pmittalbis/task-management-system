@@ -1,10 +1,12 @@
+import axios from 'axios';
 import React from 'react';
 import '../App.css';
 
 class Header extends React.Component {
   handleLogout() {
     if (this.props.user) {
-      this.props.logout();
+      window.location.reload();
+      axios.get('http://localhost:4000/Logout');
     } else {
       alert("You are alredy logged out!");
     }
