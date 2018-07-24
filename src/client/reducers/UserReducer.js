@@ -1,6 +1,7 @@
 import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
+  SET_AUTH_USER,
   SET_USERS,
   SET_TASKS,
   LOGOUT,
@@ -18,6 +19,13 @@ const UserReducer = (state = { currentUser, users, tasks }, action) => {
         currentUser,
       }
     case SET_CURRENT_USER:
+    debugger
+      return {
+        ...state,
+        currentUser: action.user,
+      }
+    case SET_AUTH_USER:
+    debugger
       return {
         ...state,
         currentUser: action.user,

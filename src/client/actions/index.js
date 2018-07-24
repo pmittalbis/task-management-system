@@ -1,6 +1,8 @@
 import {
   ASSIGN_TASK,
   GET_CURRENT_USER,
+  GET_AUTH_USER,
+  SET_AUTH_USER,
   GET_TASKS,
   GET_USERS,
   SET_TASKS,
@@ -34,6 +36,19 @@ export function getTasks(userId) {
 export function getUsers() {
   return {
     type: GET_USERS,
+  };
+}
+
+export function getAuthUser() {
+  return {
+    type: GET_AUTH_USER,
+  };
+}
+
+export function setAuthUser(user) {
+  return {
+    type: SET_AUTH_USER,
+    user,
   };
 }
 

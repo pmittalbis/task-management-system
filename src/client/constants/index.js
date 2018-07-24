@@ -1,5 +1,7 @@
 export const ASSIGN_TASK = "ASSIGN_TASK";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const GET_AUTH_USER = "GET_AUTH_USER";
+export const SET_AUTH_USER = "SET_AUTH_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const GET_TASKS = "GET_TASKS";
 export const GET_USERS = "GET_USERS";
