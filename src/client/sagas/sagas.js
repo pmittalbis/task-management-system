@@ -5,10 +5,11 @@ import {
   ASSIGN_TASK,
   LOGIN,
   GET_USERS,
+  GET_AUTH_USER,
+  SET_AUTH_USER,
   GET_TASKS,
   SET_TASKS,
   SET_USERS,
-  SET_CURRENT_USER,
   SIGNUP,
 } from '../constants';
 
@@ -40,7 +41,7 @@ export function* takeLogin() {
 }
 
 function* loginUser(action) {
-  const user = yield axios.post('http://localhost:4000/Login', {
+  yield axios.post('http://localhost:4000/Login', {
     email: action.email,
     password: action.password,
   })
@@ -56,9 +57,6 @@ function* loginUser(action) {
      }
    })
    .catch((err) => { console.log(err) });
-   if (user) {
-     yield put({ type: SET_CURRENT_USER, user });
-   }
 }
 
 export function* takeGetUsers() {
@@ -104,6 +102,23 @@ function* assignTask(action) {
    .catch((err) => { console.log(err) });
 }
 
+export function* takeGetAuthUser() {
+  yield takeEvery(GET_AUTH_USER, getAuthUser);
+}
+
+function* getAuthUser(action) {
+  const user = yield axios.get('http://localhost:4000/AuthUser')
+   .then((res) => {
+     if (typeof res === "object") {
+       return res.data
+     } else {
+       this.notify("You must login first!")
+     }
+   })
+   .catch((err) => { console.log(err); });
+   yield put({ type:SET_AUTH_USER, user })
+}
+
 export default function* rootSaga() {
   yield all([
     takeSignup(),
@@ -111,5 +126,6 @@ export default function* rootSaga() {
     takeGetUsers(),
     takeGetTasks(),
     takeAssignTask(),
+    takeGetAuthUser(),
   ]);
 }

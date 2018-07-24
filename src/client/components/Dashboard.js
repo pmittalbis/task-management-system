@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React from 'react';
+import { toast } from 'react-toastify';
+import { API_URL } from '../constants';
 import AssignTaskContainer from '../containers/AssignTaskContainer';
 import TasksPanelContainer from '../containers/TasksPanelContainer';
 import Footer from './Footer';
@@ -12,6 +14,23 @@ class LoginForm extends React.Component {
     this.state = {
       img: '',
     }
+  }
+
+  async componentWillMount() {
+    await this.props.getAuthUser();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    debugger
+    if(nextProps !== this.props) {
+      if (!nextProps.user) {
+        this.props.history.push("/");
+      }
+    }
+  }
+
+  notify(msg) {
+    toast(msg);
   }
 
   handleFileChange(e) {
@@ -34,9 +53,8 @@ class LoginForm extends React.Component {
      .catch((err) => { console.log(err) });
   }
   render() {
-    const path = "http://localhost:4000/";
-    if (this.props.user === null) {
-      this.props.history.push("/");
+    debugger
+    if (!this.props.user) {
       return (
         <h5>You must login first.</h5>
       )
@@ -44,7 +62,7 @@ class LoginForm extends React.Component {
       return (
         <div>
           <HeaderContainer />
-          <img className="center-block profile" alt="profile-pic" src={path + this.props.user.profilePic} />
+          <img className="center-block profile" alt="profile-pic" src={API_URL + this.props.user.profilePic} />
           <input className="center-block" accept="image/*" ref="file" type="file" onChange={(e) => { this.handleFileChange(e) }} />
           <button className="btn btn-info text-center" onClick={() => { this.handleSubmit(); }}>Submit</button>
           <h2>Welcome {this.props.user.name}!</h2>
