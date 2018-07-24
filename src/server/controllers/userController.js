@@ -20,12 +20,9 @@ router.use(cookieParser());
 var sessionVar;
 
 router.get('/AuthUser', async (req, res) => {
-  console.log("In auth user..");
   if (!sessionVar.user) {
-    console.log("AuthUser not found === ", sessionVar);
     res.status(401).send();
   } else {
-    console.log("AuthUser === ", sessionVar.user);
     await res.send(sessionVar.user);
   }
 });
@@ -66,12 +63,11 @@ router.post('/Login', (req, res) => {
 });
 
 router.get('/Logout', (req, res) => {
-  console.log("In logout");
   if (!sessionVar.user) {
-    res.status(401).send();
+    res.send("Unauthorised logout request.");
   } else {
     sessionVar.user = null;
-    res.status(200).send();
+    res.send("Logged out.");
   }
 });
 
@@ -88,21 +84,17 @@ router.post('/Signup', (req, res) => {
       res.send("User with this email alredy exists.");
     } else {
       newUser.save((err, response) => {
-        if (err) { console.log("Unable to Signup at the moment!"); }
-        console.log(response);
+        if (err) { res.send("Unable to Signup at the moment!"); }
         res.send(response);
       });
     }
-    return console.log(user);
   });
 });
 
 router.put('/UploadProfile/:id', upload.single('image'), (req, res) => {
-  console.log(req.params.id);
   User.findOneAndUpdate({_id: req.params.id}, {$set: {profilePic: req.file.path}}, {new: true}, (err, record) => {
     if (err) { res.send(err) }
     else {
-      console.log(record);
       res.send(record);
     }
   })

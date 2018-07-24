@@ -15,7 +15,6 @@ router.post('/AssignTask', (req, res) => {
       if (task) {
         res.send(task);
       } else {
-        console.log("Can not assign task at the moment!");
         res.send("Can not assign task at the moment!");
       }
     }
