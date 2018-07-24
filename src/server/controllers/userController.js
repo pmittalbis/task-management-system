@@ -17,13 +17,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const router = express.Router();
 router.use(cookieParser());
-var sessionVar;
+var AuthenticatedUser;
 
 router.get('/AuthUser', async (req, res) => {
-  if (!sessionVar.user) {
+  if (!AuthenticatedUser) {
     res.status(401).send();
   } else {
-    await res.send(sessionVar.user);
+    await res.send(AuthenticatedUser);
   }
 });
 
@@ -53,8 +53,8 @@ router.post('/Login', (req, res) => {
   const AuthUser = User.findOne({ email: req.body.email, password: req.body.password }, (err, record) => {
     if (err) { res.send("Login Failed!") }
     if (record) {
-      sessionVar  = req.session
-      sessionVar.user = record;
+      req.session.user = record;
+      AuthenticatedUser = req.session.user;
       res.send(record);
     } else {
       res.send("Username or password does not match!");
@@ -63,10 +63,10 @@ router.post('/Login', (req, res) => {
 });
 
 router.get('/Logout', (req, res) => {
-  if (!sessionVar.user) {
+  if (!AuthenticatedUser) {
     res.send("Unauthorised logout request.");
   } else {
-    sessionVar.user = null;
+    AuthenticatedUser = null;
     res.send("Logged out.");
   }
 });

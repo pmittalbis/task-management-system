@@ -13,6 +13,18 @@ class LoginForm extends React.Component {
     }
   }
 
+  async componentWillMount() {
+    await this.props.getAuthUser();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if(nextProps !== this.props) {
+      if (nextProps.user) {
+        this.props.history.push("/Dashboard");
+      }
+    }
+  }
+
   handleLoginClick(e) {
     e.preventDefault();
     const email = this.refs.email.value;
