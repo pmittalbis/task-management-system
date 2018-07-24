@@ -1,28 +1,33 @@
-import {
-  ASSIGN_TASK,
-  GET_CURRENT_USER,
+import { ASSIGN_TASK,
   GET_AUTH_USER,
-  SET_AUTH_USER,
+  GET_CURRENT_USER,
   GET_TASKS,
   GET_USERS,
-  SET_TASKS,
-  SET_USERS,
-  SET_CURRENT_USER,
   LOGIN,
   LOGOUT,
+  SET_AUTH_USER,
+  SET_CURRENT_USER,
+  SET_TASKS,
+  SET_USERS,
   SIGNUP,
-} from '../constants';
+  UPDATE_PROFILE, } from '../constants';
+
+  export function assignTask(task) {
+    return {
+      type: ASSIGN_TASK,
+      task,
+    };
+  }
+
+export function getAuthUser() {
+  return {
+    type: GET_AUTH_USER,
+  };
+}
 
 export function getCurrentUser() {
   return {
     type: GET_CURRENT_USER,
-  };
-}
-
-export function assignTask(task) {
-  return {
-    type: ASSIGN_TASK,
-    task,
   };
 }
 
@@ -39,9 +44,18 @@ export function getUsers() {
   };
 }
 
-export function getAuthUser() {
+export function login(email, password, thisContext) {
   return {
-    type: GET_AUTH_USER,
+    type: LOGIN,
+    email,
+    password,
+    thisContext,
+  };
+}
+
+export function logout() {
+  return {
+    type: LOGOUT,
   };
 }
 
@@ -49,6 +63,20 @@ export function setAuthUser(user) {
   return {
     type: SET_AUTH_USER,
     user,
+  };
+}
+
+export function setCurrentUser(user) {
+  return {
+    type: SET_CURRENT_USER,
+    user,
+  };
+}
+
+export function setTasks(tasks) {
+  return {
+    type: SET_TASKS,
+    tasks,
   };
 }
 
@@ -67,31 +95,10 @@ export function signup(signupDetails, thisContext) {
   };
 }
 
-export function login(email, password, thisContext) {
+export function updateProfile(formData, userId) {
   return {
-    type: LOGIN,
-    email,
-    password,
-    thisContext,
-  };
-}
-
-export function setTasks(tasks) {
-  return {
-    type: SET_TASKS,
-    tasks,
-  };
-}
-
-export function setCurrentUser(user) {
-  return {
-    type: SET_CURRENT_USER,
-    user,
-  };
-}
-
-export function logout() {
-  return {
-    type: LOGOUT,
+    type: UPDATE_PROFILE,
+    formData,
+    userId,
   };
 }
