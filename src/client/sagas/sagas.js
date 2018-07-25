@@ -11,7 +11,8 @@ import { ASSIGN_TASK,
   SET_TASKS,
   SET_USERS,
   SIGNUP,
-  UPDATE_PROFILE, } from '../constants';
+  UPDATE_PROFILE,
+  UPDATE_TASK, } from '../constants';
 
 function notify(msg) {
   toast(msg);
@@ -145,6 +146,24 @@ function* updateProfile(action) {
    .catch((err) => { console.log(err) });
 }
 
+export function* takeUpdateTask() {
+  yield takeEvery(UPDATE_TASK, updateTask);
+}
+
+function* updateTask(action) {
+  const updatedTask = yield axios.put(`http://localhost:4000/UpdateTask/${action.taskId}`, {updatedStatus: action.updatedStatus})
+   .then((res) => {
+     if (typeof res.data === "object") {
+       console.log("Updated task ", res.data)
+       return res.data
+     }
+   })
+   .catch((err) => { console.log(err) });
+   if (updatedTask) {
+     yield put({ type: GET_TASKS, userId: action.userId });
+   }
+}
+
 export default function* rootSaga() {
   yield all([
     takeAssignTask(),
@@ -155,5 +174,6 @@ export default function* rootSaga() {
     takeLogout(),
     takeSignup(),
     takeUpdateProfile(),
+    takeUpdateTask(),
   ]);
 }

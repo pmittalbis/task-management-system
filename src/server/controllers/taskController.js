@@ -35,4 +35,17 @@ router.get('/GetTasks/:userId', (req, res) => {
   });
 });
 
+router.put('/UpdateTask/:taskId', (req, res) => {
+  Task.findOneAndUpdate({_id: req.params.taskId}, {$set: {status: req.body.updatedStatus}}, {new: true}, (err, record) => {
+    if (err) { res.send(err) }
+    else {
+      if (record) {
+        res.send(record);
+      } else {
+        res.send("Unable to update task at the moment!");
+      }
+    }
+  })
+});
+
 export default router;
