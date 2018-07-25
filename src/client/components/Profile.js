@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { API_URL } from '../constants';
 import Footer from './Footer';
@@ -18,7 +19,6 @@ class Profile extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    debugger
     if(nextProps !== this.props) {
       if (!nextProps.user) {
         this.props.history.push("/");
@@ -31,7 +31,6 @@ class Profile extends React.Component {
   }
 
   handleFileChange(e) {
-    console.log(e.target.files[0]);
     this.setState({
       img: e.target.files[0]
     })
@@ -46,7 +45,11 @@ class Profile extends React.Component {
   render() {
     if (!this.props.user) {
       return (
-        <h5>You must login first.</h5>
+        <div>
+          <h5>You must login first.</h5>
+          <br />
+          <h2><Link to="/">Go to Login page</Link></h2>
+        </div>
       )
     } else {
       return (

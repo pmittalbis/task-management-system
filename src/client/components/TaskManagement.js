@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AssignTaskContainer from '../containers/AssignTaskContainer';
 import Footer from './Footer';
@@ -12,7 +13,6 @@ class TaskManagement extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    debugger
     if(nextProps !== this.props) {
       if (!nextProps.user) {
         this.props.history.push("/");
@@ -25,10 +25,13 @@ class TaskManagement extends React.Component {
   }
 
   render() {
-    debugger
     if (!this.props.user) {
       return (
-        <h5>You must login first.</h5>
+        <div>
+          <h5>You must login first.</h5>
+          <br />
+          <h2><Link to="/">Go to Login page</Link></h2>
+        </div>
       )
     } else {
       return (
