@@ -10,7 +10,8 @@ import { ASSIGN_TASK,
   SET_TASKS,
   SET_USERS,
   SIGNUP,
-  UPDATE_PROFILE, } from '../constants';
+  UPDATE_PROFILE,
+  UPDATE_TASK, } from '../constants';
 
   export function assignTask(task) {
     return {
@@ -100,5 +101,14 @@ export function updateProfile(formData, userId) {
     type: UPDATE_PROFILE,
     formData,
     userId,
+  };
+}
+
+export function updateTask(taskId, userId, updatedStatus) {
+  return {
+    type: UPDATE_TASK,
+    taskId,
+    userId,
+    updatedStatus,
   };
 }

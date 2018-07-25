@@ -12,3 +12,4 @@ export const SET_TASKS = "SET_TASKS";
 export const SET_USERS = "SET_USERS";
 export const SIGNUP = "SIGNUP";
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const UPDATE_TASK = "UPDATE_TASK";
