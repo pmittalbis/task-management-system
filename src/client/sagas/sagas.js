@@ -20,12 +20,13 @@ function notify(msg) {
   toast(msg);
 }
 
+const SERVER_URL = "https://obscure-refuge-45756.herokuapp.com";
 export function* takeAssignTask() {
   yield takeEvery(ASSIGN_TASK, assignTask);
 }
 
 function* assignTask(action) {
-  yield axios.post('http://localhost:4000/AssignTask', action.task)
+  yield axios.post('SERVER_URL/AssignTask', action.task)
    .then((res) => {
      if (typeof res.data === "object") {
        notify("Task assigned successfully.")
@@ -42,7 +43,7 @@ export function* takeGetAuthUser() {
 }
 
 function* getAuthUser(action) {
-  const user = yield axios.get('http://localhost:4000/AuthUser')
+  const user = yield axios.get('SERVER_URL/AuthUser')
    .then((res) => {
      if (typeof res === "object") {
        return res.data
@@ -59,7 +60,7 @@ export function* takeGetTasks() {
 }
 
 function* getTasks(action) {
-  const tasks = yield axios.get(`http://localhost:4000/GetTasks/${action.userId}`)
+  const tasks = yield axios.get(`SERVER_URL/GetTasks/${action.userId}`)
    .then((response) => {
      if (typeof response.data === "object") {
        return response.data
@@ -78,7 +79,7 @@ export function* takeGetUsers() {
 }
 
 function* getUsers(action) {
-  const users = yield axios.get('http://localhost:4000/GetUsers')
+  const users = yield axios.get('SERVER_URL/GetUsers')
    .then((response) => {
      if (typeof response.data === "object") {
        return response.data
@@ -97,7 +98,7 @@ export function* takeLogin() {
 }
 
 function* loginUser(action) {
-  yield axios.post('http://localhost:4000/Login', {
+  yield axios.post('SERVER_URL/Login', {
     email: action.email,
     password: action.password,
   })
@@ -118,7 +119,7 @@ export function* takeLogout() {
 }
 
 function* logoutUser(action) {
-  yield axios.get('http://localhost:4000/Logout')
+  yield axios.get('SERVER_URL/Logout')
    .catch((err) => { console.log(err) });
 }
 
@@ -127,7 +128,7 @@ export function* takeNotifyUser() {
 }
 
 function* notifyUser(action) {
-  yield axios.post(`http://localhost:4000/NotifyUser/${action.userId}`, {notification: action.notification})
+  yield axios.post(`SERVER_URL/NotifyUser/${action.userId}`, {notification: action.notification})
    .catch((err) => { console.log(err) });
 }
 
@@ -136,7 +137,7 @@ export function* takeSignup() {
 }
 
 function* signupUser(action) {
-  yield axios.post('http://localhost:4000/Signup', action.signupDetails)
+  yield axios.post('SERVER_URL/Signup', action.signupDetails)
    .then((response) => {
      if (typeof response.data === "object") {
        notify("You have successfully signed up.");
@@ -154,7 +155,7 @@ export function* takeUpdateProfile() {
 }
 
 function* updateProfile(action) {
-  const updatedUser = yield axios.put(`http://localhost:4000/UploadProfile/${action.userId}`, action.formData)
+  const updatedUser = yield axios.put(`SERVER_URL/UploadProfile/${action.userId}`, action.formData)
    .then((res) => {
      if (typeof res.data === "object") {
        notify("Profile pic updated.")
@@ -174,7 +175,7 @@ export function* takeUpdateTask() {
 }
 
 function* updateTask(action) {
-  const updatedTask = yield axios.put(`http://localhost:4000/UpdateTask/${action.taskId}`, {updatedStatus: action.updatedStatus})
+  const updatedTask = yield axios.put(`SERVER_URL/UpdateTask/${action.taskId}`, {updatedStatus: action.updatedStatus})
    .then((res) => {
      if (typeof res.data === "object") {
        return res.data
