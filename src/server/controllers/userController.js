@@ -21,7 +21,7 @@ var AuthenticatedUser;
 
 router.get('/AuthUser', async (req, res) => {
   if (!AuthenticatedUser) {
-    res.status(401).send();
+    res.send();
   } else {
     await res.send(AuthenticatedUser);
   }
@@ -71,6 +71,21 @@ router.get('/Logout', (req, res) => {
   }
 });
 
+router.post('/NotifyUser/:userId', (req, res) => {
+  User.findOneAndUpdate({_id: req.params.userId}, { $push: { notifications: req.body.notification }},
+    {new: true}, (err, updatedUser) => {
+      if (err) {
+        res.send(err);
+      } else {
+        if (updatedUser) {
+          res.send(updatedUser);
+        } else {
+          res.send('unable to notify the user');
+        }
+      }
+    })
+});
+
 router.post('/Signup', (req, res) => {
   const newUser = new User({
     name: req.body.name,
@@ -93,9 +108,14 @@ router.post('/Signup', (req, res) => {
 
 router.put('/UploadProfile/:id', upload.single('image'), (req, res) => {
   User.findOneAndUpdate({_id: req.params.id}, {$set: {profilePic: req.file.path}}, {new: true}, (err, record) => {
-    if (err) { res.send(err) }
-    else {
-      res.send(record);
+    if (err) {
+      res.send("Error occured while updating profile pic")
+    } else {
+      if (record) {
+        res.send(record);
+      } else {
+        res.send("User not found");
+      }
     }
   })
 });

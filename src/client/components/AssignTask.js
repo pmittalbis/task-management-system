@@ -14,8 +14,13 @@ class AssignTask extends React.Component {
       description: this.refs.description.value,
       status: this.refs.status.value,
     }
+    const notification = {
+      message: "A new " + this.refs.status.value + " task has been assigned to you.",
+      seen: false,
+      createdAt: Date.now(),
+    }
     await this.props.assignTask(assignedTask);
-    debugger;
+    this.props.notifyUser(notification, this.refs.name.value);
   }
 
   render() {

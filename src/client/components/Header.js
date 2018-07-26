@@ -24,7 +24,22 @@ class Header extends React.Component {
               <li className="active"><Link to="/Dashboard">Home</Link></li>
               <li><Link to="/Profile">Profile</Link></li>
               <li><Link to="/TaskManagement">Tasks</Link></li>
-              <li className="pull-right"><button className="btn btn-sm btn-warning" onClick={() => { this.handleLogout(); }}>Logout</button></li>
+              <li className="dropdown">
+                <Link to="#" className="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span className="material-icons" title="Notifications">&#xe7f4;</span></Link>
+                <ul className="dropdown-menu">
+                {
+                  (this.props.user.notifications.length > 0) ?
+                  this.props.user.notifications.map((item) => {
+                    return (
+                      <li className="notification" key={item._id}><span>{item.message}</span><hr /></li>
+                    )
+                  }) :
+                    <li className="notification"><span>Its empty here.</span><hr /></li>
+                }
+                </ul>
+              </li>
+              <li><a href="/" to="/" onClick={() => { this.handleLogout(); }}>Logout</a></li>
             </ul>
           }
         </div>

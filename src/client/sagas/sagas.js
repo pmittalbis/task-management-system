@@ -7,7 +7,9 @@ import { ASSIGN_TASK,
   GET_USERS,
   LOGIN,
   LOGOUT,
+  NOTIFY_USER,
   SET_AUTH_USER,
+  SET_CURRENT_USER,
   SET_TASKS,
   SET_USERS,
   SIGNUP,
@@ -25,8 +27,12 @@ export function* takeAssignTask() {
 function* assignTask(action) {
   yield axios.post('http://localhost:4000/AssignTask', action.task)
    .then((res) => {
-     notify("Tasked assigned successfully.")
-     return res.data
+     if (typeof res.data === "object") {
+       notify("Task assigned successfully.")
+       return res.data
+     } else {
+       notify(res.data);
+     }
    })
    .catch((err) => { console.log(err) });
 }
@@ -116,6 +122,15 @@ function* logoutUser(action) {
    .catch((err) => { console.log(err) });
 }
 
+export function* takeNotifyUser() {
+  yield takeEvery(NOTIFY_USER, notifyUser);
+}
+
+function* notifyUser(action) {
+  yield axios.post(`http://localhost:4000/NotifyUser/${action.userId}`, {notification: action.notification})
+   .catch((err) => { console.log(err) });
+}
+
 export function* takeSignup() {
   yield takeEvery(SIGNUP, signupUser);
 }
@@ -139,11 +154,19 @@ export function* takeUpdateProfile() {
 }
 
 function* updateProfile(action) {
-  yield axios.put(`http://localhost:4000/UploadProfile/${action.userId}`, action.formData)
+  const updatedUser = yield axios.put(`http://localhost:4000/UploadProfile/${action.userId}`, action.formData)
    .then((res) => {
-     console.log("Updated user ", res.data)
+     if (typeof res.data === "object") {
+       notify("Profile pic updated.")
+       return res.data
+     } else {
+       notify(res.data)
+     }
    })
    .catch((err) => { console.log(err) });
+   if (updatedUser) {
+     yield put({ type: SET_CURRENT_USER, user: updatedUser });
+   }
 }
 
 export function* takeUpdateTask() {
@@ -154,7 +177,6 @@ function* updateTask(action) {
   const updatedTask = yield axios.put(`http://localhost:4000/UpdateTask/${action.taskId}`, {updatedStatus: action.updatedStatus})
    .then((res) => {
      if (typeof res.data === "object") {
-       console.log("Updated task ", res.data)
        return res.data
      }
    })
@@ -172,6 +194,7 @@ export default function* rootSaga() {
     takeGetUsers(),
     takeLogin(),
     takeLogout(),
+    takeNotifyUser(),
     takeSignup(),
     takeUpdateProfile(),
     takeUpdateTask(),
