@@ -1,10 +1,11 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SignupForm from '../components/SignupForm';
-import { signup } from '../actions';
+import { getAuthUser, signup } from '../actions';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    getAuthUser,
     signup,
   }, dispatch);
 }
