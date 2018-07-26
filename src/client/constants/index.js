@@ -6,6 +6,7 @@ export const GET_TASKS = "GET_TASKS";
 export const GET_USERS = "GET_USERS";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const NOTIFY_USER = "NOTIFY_USER";
 export const SET_AUTH_USER = "SET_AUTH_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_TASKS = "SET_TASKS";

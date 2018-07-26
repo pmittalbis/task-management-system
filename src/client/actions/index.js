@@ -5,6 +5,7 @@ import { ASSIGN_TASK,
   GET_USERS,
   LOGIN,
   LOGOUT,
+  NOTIFY_USER,
   SET_AUTH_USER,
   SET_CURRENT_USER,
   SET_TASKS,
@@ -57,6 +58,14 @@ export function login(email, password, thisContext) {
 export function logout() {
   return {
     type: LOGOUT,
+  };
+}
+
+export function notifyUser(notification, userId) {
+  return {
+    type: NOTIFY_USER,
+    notification,
+    userId,
   };
 }
 

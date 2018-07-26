@@ -1,12 +1,13 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AssignTask from '../components/AssignTask';
-import { getUsers, assignTask } from '../actions';
+import { assignTask, getUsers, notifyUser } from '../actions';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     assignTask,
     getUsers,
+    notifyUser,
   }, dispatch);
 }
 
