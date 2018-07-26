@@ -2,26 +2,6 @@
   text-align: center;
 }
 
-.header {
-  background-color: #222;
-  text-align: center;
-  height: 70px;
-  padding: 5px;
-  color: white;
-}
-.header h3 {
-  display: inline-block;
-}
-.profile {
-  width: 150px;
-  height: 150px;
-}
-
-.panel {
-  border: 1px dotted;
-  min-height: 100px;
-}
-
 .footer {
   background-color: #222;
   text-align: center;
@@ -33,6 +13,33 @@
   padding: 15px;
   bottom: 0;
   color: white;
+}
+
+.header {
+  background-color: #222;
+  text-align: center;
+  height: 70px;
+  padding: 5px;
+  color: white;
+}
+
+.header h3 {
+  display: inline-block;
+}
+
+.notification {
+  padding: 2px;
+  font-weight: 550;
+}
+
+.panel {
+  border: 1px dotted;
+  min-height: 100px;
+}
+
+.profile {
+  width: 150px;
+  height: 150px;
 }
 
 textarea {
