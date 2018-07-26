@@ -18,7 +18,7 @@ const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use('/upload', express.static('upload'));
-server.use(cors());
+server.use(cors('*'));
 server.use(session({ secret: "itcanbeanything", resave: false, saveUninitialized: true }));
 server.use('/', userController);
 server.use('/', taskController);
