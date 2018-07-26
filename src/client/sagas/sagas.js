@@ -20,7 +20,7 @@ function notify(msg) {
   toast(msg);
 }
 
-const SERVER_URL = "https://obscure-refuge-45756.herokuapp.com";
+const SERVER_URL = "http://obscure-refuge-45756.herokuapp.com";
 export function* takeAssignTask() {
   yield takeEvery(ASSIGN_TASK, assignTask);
 }
