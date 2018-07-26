@@ -10,7 +10,6 @@ class TasksPanel extends React.Component {
   }
 
   handleDragStart(e) {
-    // e.dataTransfer.setData("text", e.target.innerHTML);
     isDropSuccessful = false;
   }
 
@@ -22,7 +21,16 @@ class TasksPanel extends React.Component {
     if (isDropSuccessful && updatedStatus) {
       this.props.updateTask(e.target.id, this.props.user._id, updatedStatus);
       isDropSuccessful = false;
+      const task = this.props.tasks.find((t) => {
+        return t._id === e.target.id
+      })
+      const notification = {
+        message: this.props.user.name + " changed task status from " + task.status + " to " + updatedStatus,
+        seen: false,
+        createdAt: Date.now(),
+      }
       updatedStatus = null;
+      this.props.notifyUser(notification, task.assignedBy);
     }
   }
 
