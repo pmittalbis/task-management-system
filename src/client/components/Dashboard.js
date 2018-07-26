@@ -11,7 +11,6 @@ class Dashboard extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    debugger
     if(nextProps !== this.props) {
       if (!nextProps.user) {
         this.props.history.push("/");
@@ -24,7 +23,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    debugger
     if (!this.props.user) {
       return (
         <div>

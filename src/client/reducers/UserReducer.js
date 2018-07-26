@@ -19,13 +19,11 @@ const UserReducer = (state = { currentUser, users, tasks }, action) => {
         currentUser,
       }
     case SET_CURRENT_USER:
-    debugger
       return {
         ...state,
         currentUser: action.user,
       }
     case SET_AUTH_USER:
-    debugger
       return {
         ...state,
         currentUser: action.user,
@@ -36,7 +34,6 @@ const UserReducer = (state = { currentUser, users, tasks }, action) => {
         users: action.users,
       }
     case SET_TASKS:
-    debugger
       return {
         ...state,
         tasks: action.tasks,

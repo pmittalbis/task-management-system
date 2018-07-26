@@ -12,7 +12,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  debugger
   return {
     user: state.UserReducer.currentUser,
   };
